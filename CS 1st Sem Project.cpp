@@ -88,6 +88,31 @@ void login_user()
 
 	
 }
+void login_register()
+{
+	int user_type;
+	cout<<"Enter number according to your role:\n1 for User\n2 for Restruant Manager\n3 for Owner\n4 To exit"<<endl;
+	cin>>user_type;
+	
+	if(user_type>4||user_type<1)
+	{
+		cout<<"enter number of valid role"<<endl;
+		cout<<"---------------------------------------------------------------------------------------"<<endl;
+		login_register();
+	}
+	
+	cout<<"---------------------------------------------------------------------------------------"<<endl;
+	
+	if(user_type==1)
+		login_user();
+	else if(user_type==2)
+		login_manager();
+	else if(user_type==3)
+		login_owner();
+	else if(user_type==4)
+		exit(0);
+
+}
 
 int main(){
 	cout<<"Semester Project";
