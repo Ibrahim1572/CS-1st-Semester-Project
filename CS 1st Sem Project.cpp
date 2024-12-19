@@ -253,64 +253,69 @@ void login_owner()
 		
 }
 
-void menu_display()
-{
-	cout<<"Enter restraunt number"<<endl;
-	
-	fstream res_name;
-	string name;
-	int counter=1, res_num;
-	res_name.open("res_name.txt");
-	while(getline(res_name, name))
-	{
-		cout<<counter<<"\t"<<name<<endl;
-		counter++;
+void menu_display() {
+    cout << "Enter restaurant number:" << endl;
+				
+    fstream res_name;
+    string name;
+    int counter = 1, res_num;
+
+    // Display restaurant names
+    res_name.open("res_name.txt");
+    while (getline(res_name, name)) {
+        cout << counter << "\t" << name << endl;
+        counter++;
+    }
+    res_name.close();
+
+    cin >> res_num;
+    if (res_num < 1 || res_num > 3) {
+    cout << "Invalid restaurant number!" << endl;
+    return; // Exit the function
+}
+
+
+    fstream res_item;
+    res_item.open("res_items.txt");
+    string item;
+    string marker,next_marker;
+	if (res_num == 1){
+		marker = "*";
+		next_marker="**";
+	} 
+	else if(res_num==2){
+		marker = "**";
+		next_marker ="***";}
+	else if(res_num ==3 ){
+		marker = "***";
+		next_marker= "****"; }
+	else{
+	cout<<"Invalid restuarant number!"<<endl;
 	}
+			
 	
-	cin>>res_num;
-	
-	fstream res_item;
-	res_item.open("res_items.txt");
-	string item;
-	
-	if(res_num==1)
-	{
-		int counter=1;
-		
-		while(getline(res_item, item))
-		{
-			if(item=="2")
-				break;
-			else
-			{
-				cout<<counter<<"\t"<<setw(15)<<item;
-				getline(res_item, item);
-				cout<<setw(10)<<item<<endl;
-				counter++;
+    // Skip to the selected restaurant menu
+    while (getline(res_item, item)) {
+        if (item == marker) {
+            break;
+        }
+    }
+
+    // Display the menu 
+    counter = 1;
+    while (getline(res_item, item)) {
+        if (item == next_marker) {
+            break;
 			}
-		}
-	}
-	else if(res_num==2)
-	{
-		int counter=1;
-		
-		while(true)
-		{
-			getline(res_item, item);
-			if(item=="2")
-			{
-				while(getline(res_item, item))
-				{
-					cout<<counter<<"\t"<<setw(15)<<item;
-					getline(res_item, item);
-					cout<<setw(10)<<item<<endl;
-					counter++;
-			}
-			}else if(item=="3")
-				break;
-		}
-	}
-	
+        cout  << "\t" << left << setw(20) << item; // Print  name
+        if (getline(res_item, item)) { // Print price
+            cout << right << setw(10) << item << endl;
+        }
+        counter++;
+    //    cout<<seekg();
+    }
+
+    res_item.close();
 }
 
 int main()
