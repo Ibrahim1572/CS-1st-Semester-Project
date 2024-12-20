@@ -17,25 +17,25 @@ void res_edit();
 //	
 //}
 
-void order()
-{
-	
-	int item_num;
-	cout<<"enetr item number: ";
-	cin>>item_num;
-	
-	string ord, item;
-	fstream res_item;
-	res_item.open("res_item.txt");
-	fstream order;
-	order.open("order.txt");
-	
-	while(getline(res_item, item))
-	{
-		if(item==&r_num)
-	}
-	
-}
+//void order()
+//{
+//	
+//	int item_num;
+//	cout<<"enetr item number: ";
+//	cin>>item_num;
+//	
+//	string ord, item;
+//	fstream res_item;
+//	res_item.open("res_item.txt");
+//	fstream order;
+//	order.open("order.txt");
+//	
+//	while(getline(res_item, item))
+//	{
+//		if(item==&r_num)
+//	}
+//	
+//}
 
 void login_register()
 {
@@ -286,110 +286,86 @@ void login_owner()
 			
 
 		}
-		if(flag==0)
-		{
-			cout<<"Invalid username or password "<<endl;
-			cout<<"---------------------------------------------------------------------------------------"<<endl;
-			login_user();
-		}
-		
+//		if(flag==0)
+//		{
+//			cout<<"Invalid username or password "<<endl;
+//			cout<<"---------------------------------------------------------------------------------------"<<endl;
+//			login_user();
+//		}
+//		
 }
 
-void menu_display()
-{
-	cout<<"Enter restraunt number"<<endl;
-	
-	fstream res_name;
-	string name;
-	int counter=1, res_num;
-	res_name.open("res_name.txt");
-	while(getline(res_name, name))
-	{
-		cout<<counter<<"\t"<<name<<endl;
-		counter++;
-	}
-	
-	cin>>res_num;
-	string res="*";
-	for(int i=1; i<res_num; i++)
-	{
-		res=res+"*";
-	}
-	fstream res_item;
-	res_item.open("res_items.txt");
-	string item;
-	*r_num=&res;
-	while(true)
-	{
-		getline(res_item, item);
-		cout<<res<<endl;
-		cout<<item<<endl;
-		if(res==item)
-		{
-			getline(res_item, item);
-			while(true)
-			{
+void menu_display() {
+    cout << "Enter restaurant number:" << endl;
 				
-				cout<<counter<<"\t"<<setw(15)<<item;
-				getline(res_item, item);
-				cout<<setw(10)<<item<<endl;
-				counter++;
-				getline(res_item, item);
-				if(res==(item+"*"))
-					break;
-			}
-		}
-		if(res==(item+"*"))
-			break;
+    fstream res_name;
+    string name;
+    int counter = 1, res_num;
+
+    // Display restaurant names
+    res_name.open("res_name.txt");
+    while (getline(res_name, name)) {
+        cout << counter << "\t" << name << endl;
+        counter++;
+    }
+    res_name.close();
+
+    cin >> res_num;
+    if (res_num < 1 || res_num > 3) {
+    cout << "Invalid restaurant number!" << endl;
+    return; // Exit the function
+}
+
+
+    fstream res_item;
+    res_item.open("res_items.txt");
+    string item;
+    string marker,next_marker;
+	if (res_num == 1){
+		marker = "*";
+		next_marker="**";
+	} 
+	else if(res_num==2){
+		marker = "**";
+		next_marker ="***";}
+	else if(res_num ==3 ){
+		marker = "***";
+		next_marker= "****"; }
+	else{
+	cout<<"Invalid restuarant number!"<<endl;
 	}
-//	
-//	if(res_num==1)
-//	{
-//		int counter=1;
-//		
-//		while(getline(res_item, item))
-//		{
-//			if(item=="2")
-//				break;
-//			else
-//			{
-//				cout<<counter<<"\t"<<setw(15)<<item;
-//				getline(res_item, item);
-//				cout<<setw(10)<<item<<endl;
-//				counter++;
-//			}
-//		}
-//	}
-//	else if(res_num==2)
-//	{
-//		int counter=1, count=0;
-//		
-//		while(true)
-//		{
-//			getline(res_item, item);
-//			if(item=="2")
-//			{
-//				while(true)
-//				{
-//					getline(res_item, item);
-//					if(item=="3")
-//						break;
-//					cout<<counter<<"\t"<<setw(15)<<item;
-//					getline(res_item, item);
-//					cout<<setw(10)<<item<<endl;
-//					counter++;
-//				}
-//			}
-//		}
-//	}
-////	else if()
+			
+	
+    // Skip to the selected restaurant menu
+    while (getline(res_item, item)) {
+        if (item == marker) {
+            break;
+        }
+    }
+
+    // Display the menu 
+    counter = 1;
+    cout<<"\n \t Menu \n";
+    while (getline(res_item, item)) {
+        if (item == next_marker) {
+            break;
+			}
+        cout  <<counter<< "\t" << left << setw(20) << item; // Print  name
+        if (getline(res_item, item)) { // Print price
+            cout << right << setw(10) << item << endl;
+        }
+        counter++;
+    //    cout<<seekg();
+    }
+
+    res_item.close();
 }
 
 int main()
 {
 	login_register();
 	
-//	menu_display();
+	menu_display();
 	
 //	fstream order;
 //	order.open("order.txt", ofstream::out | ofstream::trunc);

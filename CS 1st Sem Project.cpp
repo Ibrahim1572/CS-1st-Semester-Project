@@ -3,19 +3,19 @@
 #include<string>
 #include<iomanip>
 using namespace std;
-
+				
 void menu_edit(int res_num);
 void login_register();
 void login_user();
 void login_manager();
 void login_owner();
 void menu_display();
-
+	
 //void menu_edit()
 //{
 //	
 //}
-
+		
 void login_register()
 {
 	int user_type;
@@ -39,15 +39,15 @@ void login_register()
 		login_owner();
 	else if(user_type==4)
 		exit(0);
-
+	
 }
-
+		
 void login_user()
 {
 	int acc_type;
 	cout<<"Enetr 1 to Login to Existing accout\nEnetr 2 to Register as a new user"<<endl;
 	cin>>acc_type;
-	
+		
 	if(acc_type==1)
 	{
 		string iAcc, iPass;
@@ -322,7 +322,7 @@ int main()
 {
 	login_register();
 	
-	menu_display();
+	
 	
 //	fstream order;
 //	order.open("order.txt", ofstream::out | ofstream::trunc);
