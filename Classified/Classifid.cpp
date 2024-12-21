@@ -2,6 +2,8 @@
 #include<fstream>
 #include<string>
 #include<iomanip>
+#include<sstream>
+
 using namespace std;
 
 void opt_menu();
@@ -47,7 +49,7 @@ void order(int res_num, int it_num)
 	
 	string ord, item;
 	fstream res_item;
-	res_item.open("res_item.txt");
+	res_item.open("res_items.txt");
 	fstream order;
 	order.open("order.txt", ios::app);
 	
@@ -436,7 +438,7 @@ void opt_menu()
 }
 int main()
 {
-//	login_register();
+	login_register();
 	fstream order;
 	order.open("order.txt", ofstream::out | ofstream::trunc);
 	order.close();
