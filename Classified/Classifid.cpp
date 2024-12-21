@@ -90,7 +90,6 @@ void login_user()
 				if(acc==iPass)
 				{
 					cout<<"Login Successful"<<endl;
-					cout<<"---------------------------------------------------------------------------------------"<<endl;
 					flag=1;
 					break;
 				}
@@ -129,9 +128,8 @@ void login_user()
 		fstream user_accounts;
 		string acc, pass;
 		user_accounts.open("user_accounts.txt");
-		while(true)
+		while(getline(user_accounts, acc))
 		{
-			getline(user_accounts, acc);
 			if(acc==iAcc)
 			{
 				cout<<"Username already taken"<<endl;
@@ -139,7 +137,7 @@ void login_user()
 				login_user();
 				
 			}
-			else
+			else 
 			{
 				cout<<"Enter password: ";
 				cin>>iPass;
@@ -303,43 +301,47 @@ void menu_display() {
     fstream res_name;
     string name;
     int counter = 1, res_num;
-
+			
     // Display restaurant names
     res_name.open("res_name.txt");
     while (getline(res_name, name)) {
         cout << counter << "\t" << name << endl;
         counter++;
-    }
+    }		
     res_name.close();
-
+			
     cin >> res_num;
-    if (res_num < 1 || res_num > 3) {
+    if (res_num < 1 || res_num > 4) {
     cout << "Invalid restaurant number!" << endl;
     return; // Exit the function
-}
-
-
-    fstream res_item;
-    res_item.open("res_items.txt");
+}			
+			
+			
+    fstream res_items;
+    res_items.open("res_items.txt");
     string item;
     string marker,next_marker;
-	if (res_num == 1){
-		marker = "*";
-		next_marker="**";
-	} 
-	else if(res_num==2){
-		marker = "**";
-		next_marker ="***";}
-	else if(res_num ==3 ){
-		marker = "***";
-		next_marker= "****"; }
-	else{
-	cout<<"Invalid restuarant number!"<<endl;
-	}
-			
-	
+    marker="*";
+	for(int i=1;i<res_num;i++){
+		marker=marker+"*";
+	}				
+	next_marker= marker+"*";
+//		if (res_num == 1){
+//		marker = "*";
+//		next_marker="**";
+//	} 			
+//	else if(res_num==2){
+//		marker = "**";
+//		next_marker ="***";}
+//	else if(res_num ==3 ){
+//		marker = "***";
+//		next_marker= "****"; }
+//	else{		
+//	cout<<"Invalid restuarant number!"<<endl;
+//	}			
+//				
     // Skip to the selected restaurant menu
-    while (getline(res_item, item)) {
+    while (getline(res_items, item)) {
         if (item == marker) {
             break;
         }
@@ -348,24 +350,23 @@ void menu_display() {
     // Display the menu 
     counter = 1;
     cout<<"\n \t Menu \n";
-    while (getline(res_item, item)) {
+    while (getline(res_items, item)) {
         if (item == next_marker) {
             break;
 			}
-        cout  <<counter<< "\t" << left << setw(20) << item; // Print  name
-        if (getline(res_item, item)) { // Print price
-            cout << right << setw(10) << item << endl;
-        }
+        cout  <<counter << "\t" << left << setw(20) << item; // Print  name
+        if (getline(res_items, item)) { // Print price
+            cout <<right << setw(10) << item << endl;
+        }	
         counter++;
     //    cout<<seekg();
     }
-
-    res_item.close();
+			
+    res_items.close();
 }
-
 int main()
 {
-	login_register();
+//	login_register();
 	
 	menu_display();
 	
