@@ -90,6 +90,7 @@ void login_user()
 				if(acc==iPass)
 				{
 					cout<<"Login Successful"<<endl;
+					cout<<"---------------------------------------------------------------------------------------"<<endl;
 					flag=1;
 					break;
 				}
@@ -128,8 +129,9 @@ void login_user()
 		fstream user_accounts;
 		string acc, pass;
 		user_accounts.open("user_accounts.txt");
-		while(getline(user_accounts, acc))
+		while(true)
 		{
+			getline(user_accounts, acc);
 			if(acc==iAcc)
 			{
 				cout<<"Username already taken"<<endl;
@@ -137,7 +139,7 @@ void login_user()
 				login_user();
 				
 			}
-			else 
+			else
 			{
 				cout<<"Enter password: ";
 				cin>>iPass;
