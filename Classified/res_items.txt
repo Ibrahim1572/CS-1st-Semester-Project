@@ -8,13 +8,13 @@ Rs.450
 Chapli Kabab
 Rs.600
 **
-double fillet
+Double fillet
 Rs.600
-pizza
+Pizza
 Rs.500
-chicken sandwich
+Chicken sandwich
 Rs.450
-shawarma
+Shawarma
 Rs.300
 ***
 Oreo Shake 
@@ -24,5 +24,9 @@ Rs.180
 Mango Tang 
 Rs.120
 Pineapple Tang
-Rs.120
+Rs.120 
 ****
+Chicken Haleem
+Rs.200
+Chicken Karahi
+Rs.350
