@@ -1,4 +1,6 @@
-Pizza
-500
-Chicken Haleem
-200
+Butter chicken
+Rs.800
+
+
+Double fillet
+Rs.600

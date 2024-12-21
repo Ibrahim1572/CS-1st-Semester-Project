@@ -2,12 +2,8 @@
 #include<fstream>
 #include<string>
 #include<iomanip>
-#include<sstream>
-#include <vector>
 using namespace std;
-
-void bill_calc();	
-void opt_menu();	
+		
 void menu_edit(int res_num);
 void login_register();
 void login_user();
@@ -16,38 +12,14 @@ void login_owner();
 void menu_display();
 void res_edit();
 
-
-void bill_calc()
-{
-	fstream order;
-	string item;
-	order.open("order.txt");
-	cout<<"---------------------------------------------------------------------------------------"<<endl;
-	
-	int sum=0, counter =1, num;
-	
-	while(getline(order, item))
-	{
-		cout  <<counter << "\t" << left << setw(20) << item; // Print  name
-        if (getline(order, item)) { // Print price
-            cout <<right << setw(10) << item << endl;
-            stringstream ss(item);
-    		ss >> num;
-    		sum=sum+num;
-            
-        }	
-        counter++;
-	}
-	cout<<"Total is: "<<sum<<endl;
-}
-
-void menu_edit() {
-    cout << "Enter restaurant number:" << endl;
-
+void menu_edit()
+{		
+cout << "Enter restaurant number:" << endl;
+				
     fstream res_name;
     string name;
     int counter = 1, res_num;
-
+			
     // Display restaurant names
     res_name.open("res_name.txt");
     while (getline(res_name, name)) {
@@ -55,117 +27,54 @@ void menu_edit() {
         counter++;
     }	 	
     res_name.close();
-
+		 	
     cin >> res_num;
     if (res_num < 1 || res_num > 4) {
-        cout << "Invalid restaurant number!" << endl;
-        return; // Exit the function
-    }
-
-    // Open the menu file 
-    fstream res_items("res_items.txt", ios::in);
-    vector<string> file_content;
-    string item, marker = "*";
-
-    for (int i = 1; i < res_num; i++) {
-        marker += "*";
-    }
-
-    // Read file content into a vector
-    while (getline(res_items, item)) {
-        file_content.push_back(item);
-    }
-    res_items.close();
-
-    // Locate the marker 
-    int insert_position = -1;
-    for (int i = 0; i < file_content.size(); i++) {
-        if (file_content[i] == marker) {
-            insert_position = i + 1;
-            break;
-        }
-    }
-
-    if (insert_position == -1) {
-        cout << "Error: Restaurant marker not found!" << endl;
-        return;
-    }
-
-//    new menu item at the correct position
-    cout << "\nWhich dish do you want to enter?\n";
-    string edit;
-    cin.ignore();
-    getline(cin, edit);
-
-    file_content.insert(file_content.begin() + insert_position, edit);
-
-    ofstream menu_edit("res_items.txt", ios::out | ios::trunc);
-    for (size_t i = 0; i < file_content.size(); i++) {
-        menu_edit << file_content[i] << endl;
-    }
-    menu_edit.close();
-
-    cout << "\nDish added successfully\n";
-}
-
-
-void opt_menu()
-{
-	int opt; 
-	cout<<"If you want to order any thing else enter 1\nIf you want to check out press 2"<<endl;
-	cin>>opt;
-	if(opt==1)
-	{
-		menu_display();
-	}
-	else if(opt==2)
-		bill_calc();
-	else
-		opt_menu();
-}
-void order(int res_num, int it_num)
-{
-
-	string ord, item;
-	fstream res_item;
-	res_item.open("res_items.txt");
-	fstream order;
-	order.open("order.txt", ios::app);
-
-	string marker="*", next_marker;
-
-	for(int i=1; i<res_num; i++)
-	{
+    cout << "Invalid restaurant number!" << endl;
+    return; // Exit the function
+}		 
+    fstream res_items;
+    res_items.open("res_items.txt");
+    string item;
+    string marker,next_marker;
+    marker="*";
+	for(int i=1;i<res_num;i++){
 		marker=marker+"*";
-	}
-	next_marker=marker+"*";
+	}	 			
+    // Skip to the selected restaurant menu
+    while (getline(res_items, item)) {
+        if (item == marker) {
+            break;
+        }}
+    ofstream menu_edit("res_items.txt", ios::app);
+	string edit;
+	cout<<"\nWhich dish do you want to enter?\n";
+	//cin>>edit;
+	cin.ignore();
+	getline(cin,edit);    
+	menu_edit<<edit<<endl;
+	menu_edit.close();
+  	cout<<"\nDish added successfully\n";
 
-	while(getline(res_item, item))
-	{
-
-		if(item==marker)
-		{
-			for(int i=1; i<=it_num; i++)
-			{
-
-				if(i==it_num)
-				{
-					getline(res_item, item);
-					order<<item<<endl;
-					getline(res_item, item);
-					order<<item<<endl;
-				}
-				getline(res_item, item);
-				getline(res_item, item);
-			}
-		}
-	}
+}
+void order()
+{
+//	
+//	int item_num;
+//	cout<<"enetr item number: ";
+//	cin>>item_num;
+//	
+//	string ord, item;
+//	fstream res_item;
+//	res_item.open("res_item.txt");
+//	fstream order;
+//	order.open("order.txt");
+//	
 //	while(getline(res_item, item))
 //	{
 //		if(item==&r_num)
 //	}
-	opt_menu();
-
+//	
 }
 
 void login_register()
@@ -491,22 +400,16 @@ void menu_display() {
     //    cout<<seekg();
     }
 			
-   int it_num;
-	cin>>it_num;
     res_items.close();
-    order(res_num, it_num);
 }
 int main()
 {
-	fstream order;
-	order.open("order.txt", ofstream::out | ofstream::trunc);
-	order.close();
-	
 	login_register();
-	
 	menu_display();
-  
-
+	
+//	fstream order;
+//	order.open("order.txt", ofstream::out | ofstream::trunc);
+//	order.close();
 
 	return 0;
 }
