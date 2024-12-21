@@ -2,8 +2,10 @@
 #include<fstream>
 #include<string>
 #include<iomanip>
+#include<sstream>
 using namespace std;
-		
+	
+void opt_menu();	
 void menu_edit(int res_num);
 void login_register();
 void login_user();
@@ -56,6 +58,21 @@ cout << "Enter restaurant number:" << endl;
 	menu_edit.close();
   	cout<<"\nDish added successfully\n";
 
+}
+
+void opt_menu()
+{
+	int opt; 
+	cout<<"If you want to order any thing else enter 1\nIf you want to check out press 2"<<endl;
+	cin>>opt;
+	if(opt==1)
+	{
+		menu_display();
+	}
+	else if(opt==2)
+		bil_clac();
+	else
+		opt_menu();
 }
 void order()
 {
@@ -401,15 +418,19 @@ void menu_display() {
     }
 			
     res_items.close();
+    opt_menu();
 }
 int main()
 {
+	fstream order;
+	order.open("order.txt", ofstream::out | ofstream::trunc);
+	order.close();
+	
 	login_register();
+	
 	menu_display();
 	
-//	fstream order;
-//	order.open("order.txt", ofstream::out | ofstream::trunc);
-//	order.close();
+
 
 	return 0;
 }
