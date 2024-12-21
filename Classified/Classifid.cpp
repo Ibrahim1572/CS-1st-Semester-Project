@@ -4,7 +4,8 @@
 #include<iomanip>
 #include<sstream>
 using namespace std;
-	
+
+void bill_calc();	
 void opt_menu();	
 void menu_edit(int res_num);
 void login_register();
@@ -13,6 +14,31 @@ void login_manager();
 void login_owner();
 void menu_display();
 void res_edit();
+
+
+void bill_calc()
+{
+	fstream order;
+	string item;
+	order.open("order.txt");
+	cout<<"---------------------------------------------------------------------------------------"<<endl;
+	
+	int sum=0, counter =1, num;
+	
+	while(getline(order, item))
+	{
+		cout  <<counter << "\t" << left << setw(20) << item; // Print  name
+        if (getline(order, item)) { // Print price
+            cout <<right << setw(10) << item << endl;
+            stringstream ss(item);
+    		ss >> num;
+    		sum=sum+num;
+            
+        }	
+        counter++;
+	}
+	cout<<"Total is: "<<sum<<endl;
+}
 
 void menu_edit()
 {		
@@ -74,24 +100,49 @@ void opt_menu()
 	else
 		opt_menu();
 }
-void order()
+void order(int res_num, int it_num)
 {
-//	
-//	int item_num;
-//	cout<<"enetr item number: ";
-//	cin>>item_num;
-//	
-//	string ord, item;
-//	fstream res_item;
-//	res_item.open("res_item.txt");
-//	fstream order;
-//	order.open("order.txt");
-//	
+
+	string ord, item;
+	fstream res_item;
+	res_item.open("res_item.txt");
+	fstream order;
+	order.open("order.txt", ios::app);
+
+	string marker="*", next_marker;
+
+	for(int i=1; i<res_num; i++)
+	{
+		marker=marker+"*";
+	}
+	next_marker=marker+"*";
+
+	while(getline(res_item, item))
+	{
+
+		if(item==marker)
+		{
+			for(int i=1; i<=it_num; i++)
+			{
+
+				if(i==it_num)
+				{
+					getline(res_item, item);
+					order<<item<<endl;
+					getline(res_item, item);
+					order<<item<<endl;
+				}
+				getline(res_item, item);
+				getline(res_item, item);
+			}
+		}
+	}
 //	while(getline(res_item, item))
 //	{
 //		if(item==&r_num)
 //	}
-//	
+	opt_menu();
+
 }
 
 void login_register()
