@@ -397,18 +397,7 @@ void menu_display() {
     order(res_num, it_num);
     
 }
-void opt_menu()
-{
-	int opt; 
-	cout<<"If you want to order any thing else enter 1\nIf you want to check out press 2"<<endl;
-	cin>>opt;
-	if(opt==1)
-	{
-		menu_display();
-	}
-//	else if()
-	else
-		opt_menu();
+
 }
 int main()
 {
