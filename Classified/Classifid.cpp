@@ -13,12 +13,35 @@ void login_owner();
 void menu_display();
 void res_edit();
 void order(int res_num, int it_num);
+void bill_calc();
 
 //void menu_edit()
 //{
 //	
 //}
-
+void bill_calc()
+{
+	fstream order;
+	string item;
+	order.open("order.txt");
+	cout<<"---------------------------------------------------------------------------------------"<<endl;
+	
+	int sum=0, counter =1, num;
+	
+	while(getline(order, item))
+	{
+		cout  <<counter << "\t" << left << setw(20) << item; // Print  name
+        if (getline(order, item)) { // Print price
+            cout <<right << setw(10) << item << endl;
+            stringstream ss(item);
+    		ss >> num;
+    		sum=sum+num;
+            
+        }	
+        counter++;
+	}
+	cout<<"Total is: "<<sum<<endl;
+}
 void order(int res_num, int it_num)
 {
 	
