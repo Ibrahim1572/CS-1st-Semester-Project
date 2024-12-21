@@ -3,7 +3,7 @@
 #include<string>
 #include<iomanip>
 using namespace std;
-
+		
 void menu_edit(int res_num);
 void login_register();
 void login_user();
@@ -12,13 +12,53 @@ void login_owner();
 void menu_display();
 void res_edit();
 
-//void menu_edit()
-//{
-//	
-//}
+void menu_edit()
+{		
+cout << "Enter restaurant number:" << endl;
+				
+    fstream res_name;
+    string name;
+    int counter = 1, res_num;
+			
+    // Display restaurant names
+    res_name.open("res_name.txt");
+    while (getline(res_name, name)) {
+        cout << counter << "\t" << name << endl;
+        counter++;
+    }	 	
+    res_name.close();
+		 	
+    cin >> res_num;
+    if (res_num < 1 || res_num > 4) {
+    cout << "Invalid restaurant number!" << endl;
+    return; // Exit the function
+}		 
+    fstream res_items;
+    res_items.open("res_items.txt");
+    string item;
+    string marker,next_marker;
+    marker="*";
+	for(int i=1;i<res_num;i++){
+		marker=marker+"*";
+	}	 			
+    // Skip to the selected restaurant menu
+    while (getline(res_items, item)) {
+        if (item == marker) {
+            break;
+        }}
+    ofstream menu_edit("res_items.txt", ios::app);
+	string edit;
+	cout<<"\nWhich dish do you want to enter?\n";
+	//cin>>edit;
+	cin.ignore();
+	getline(cin,edit);    
+	menu_edit<<edit<<endl;
+	menu_edit.close();
+  	cout<<"\nDish added successfully\n";
 
-//void order()
-//{
+}
+void order()
+{
 //	
 //	int item_num;
 //	cout<<"enetr item number: ";
@@ -35,7 +75,7 @@ void res_edit();
 //		if(item==&r_num)
 //	}
 //	
-//}
+}
 
 void login_register()
 {
@@ -307,16 +347,14 @@ void menu_display() {
     while (getline(res_name, name)) {
         cout << counter << "\t" << name << endl;
         counter++;
-    }		
+    }	 	
     res_name.close();
-			
+		 	
     cin >> res_num;
     if (res_num < 1 || res_num > 4) {
     cout << "Invalid restaurant number!" << endl;
     return; // Exit the function
-}			
-			
-			
+}		 
     fstream res_items;
     res_items.open("res_items.txt");
     string item;
@@ -324,12 +362,12 @@ void menu_display() {
     marker="*";
 	for(int i=1;i<res_num;i++){
 		marker=marker+"*";
-	}				
+	}	 			
 	next_marker= marker+"*";
 //		if (res_num == 1){
 //		marker = "*";
 //		next_marker="**";
-//	} 			
+//	} 	 		
 //	else if(res_num==2){
 //		marker = "**";
 //		next_marker ="***";}
@@ -338,8 +376,8 @@ void menu_display() {
 //		next_marker= "****"; }
 //	else{		
 //	cout<<"Invalid restuarant number!"<<endl;
-//	}			
-//				
+//	}	 		
+//		 		
     // Skip to the selected restaurant menu
     while (getline(res_items, item)) {
         if (item == marker) {
@@ -367,8 +405,8 @@ void menu_display() {
 int main()
 {
 //	login_register();
-	
-	menu_display();
+	menu_edit();
+//	menu_display();
 	
 //	fstream order;
 //	order.open("order.txt", ofstream::out | ofstream::trunc);
