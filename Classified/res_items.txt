@@ -24,4 +24,5 @@ Rs.180
 Mango Tang 
 Rs.120
 Pineapple Tang
-Rs.120 
+Rs.120
+****

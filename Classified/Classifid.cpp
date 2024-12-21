@@ -4,6 +4,7 @@
 #include<iomanip>
 using namespace std;
 
+void opt_menu();
 void menu_edit(int res_num);
 void login_register();
 void login_user();
@@ -11,31 +12,57 @@ void login_manager();
 void login_owner();
 void menu_display();
 void res_edit();
+void order(int res_num, int it_num);
 
 //void menu_edit()
 //{
 //	
 //}
 
-//void order()
-//{
-//	
-//	int item_num;
-//	cout<<"enetr item number: ";
-//	cin>>item_num;
-//	
-//	string ord, item;
-//	fstream res_item;
-//	res_item.open("res_item.txt");
-//	fstream order;
-//	order.open("order.txt");
-//	
+void order(int res_num, int it_num)
+{
+	
+	string ord, item;
+	fstream res_item;
+	res_item.open("res_item.txt");
+	fstream order;
+	order.open("order.txt", ios::app);
+	
+	string marker="*", next_marker;
+	
+	for(int i=1; i<res_num; i++)
+	{
+		marker=marker+"*";
+	}
+	next_marker=marker+"*";
+	
+	while(getline(res_item, item))
+	{
+		
+		if(item==marker)
+		{
+			for(int i=1; i<=it_num; i++)
+			{
+				
+				if(i==it_num)
+				{
+					getline(res_item, item);
+					order<<item<<endl;
+					getline(res_item, item);
+					order<<item<<endl;
+				}
+				getline(res_item, item);
+				getline(res_item, item);
+			}
+		}
+	}
 //	while(getline(res_item, item))
 //	{
 //		if(item==&r_num)
 //	}
-//	
-//}
+	opt_menu();
+	
+}
 
 void login_register()
 {
@@ -186,6 +213,7 @@ void login_manager()
 				if(acc==iPass)
 				{
 					cout<<"Login Successful"<<endl;
+					flag=1;
 					break;
 				}
 //				else
@@ -253,6 +281,7 @@ void login_manager()
 
 void login_owner()
 {
+	bool flag=0;
 	string iAcc, iPass;
 		cout<<"Enetr owner user name: ";
 		cin>>iAcc;
@@ -270,6 +299,7 @@ void login_owner()
 				if(acc==iPass)
 				{
 					cout<<"Login Successful"<<endl;
+					flag=1;
 					break;
 				}
 //				else
@@ -288,12 +318,12 @@ void login_owner()
 			
 
 		}
-//		if(flag==0)
-//		{
-//			cout<<"Invalid username or password "<<endl;
-//			cout<<"---------------------------------------------------------------------------------------"<<endl;
-//			login_user();
-//		}
+		if(flag==0)
+		{
+			cout<<"Invalid username or password "<<endl;
+			cout<<"---------------------------------------------------------------------------------------"<<endl;
+			login_user();
+		}
 //		
 }
 
@@ -359,19 +389,35 @@ void menu_display() {
         counter++;
     //    cout<<seekg();
     }
-
+	int it_num;
+	cin>>it_num;
     res_item.close();
+    order(res_num, it_num);
+    
 }
-
+void opt_menu()
+{
+	int opt; 
+	cout<<"If you want to order any thing else enter 1\nIf you want to check out press 2"<<endl;
+	cin>>opt;
+	if(opt==1)
+	{
+		menu_display();
+	}
+//	else if()
+	else
+		opt_menu();
+}
 int main()
 {
-	login_register();
+//	login_register();
+	fstream order;
+	order.open("order.txt", ofstream::out | ofstream::trunc);
+	order.close();
 	
 	menu_display();
 	
-//	fstream order;
-//	order.open("order.txt", ofstream::out | ofstream::trunc);
-//	order.close();
+
 
 	return 0;
 }
