@@ -18,3 +18,5 @@ zoro
 z123
 zoro
 z123
+npc
+123
