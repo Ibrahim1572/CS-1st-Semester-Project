@@ -3,6 +3,7 @@
 #include<string>
 #include<iomanip>
 #include<sstream>
+#include <vector>
 using namespace std;
 
 void bill_calc();	
@@ -40,14 +41,13 @@ void bill_calc()
 	cout<<"Total is: "<<sum<<endl;
 }
 
-void menu_edit()
-{		
-cout << "Enter restaurant number:" << endl;
-				
+void menu_edit() {
+    cout << "Enter restaurant number:" << endl;
+
     fstream res_name;
     string name;
     int counter = 1, res_num;
-			
+
     // Display restaurant names
     res_name.open("res_name.txt");
     while (getline(res_name, name)) {
@@ -55,36 +55,59 @@ cout << "Enter restaurant number:" << endl;
         counter++;
     }	 	
     res_name.close();
-		 	
+
     cin >> res_num;
     if (res_num < 1 || res_num > 4) {
-    cout << "Invalid restaurant number!" << endl;
-    return; // Exit the function
-}		 
-    fstream res_items;
-    res_items.open("res_items.txt");
-    string item;
-    string marker,next_marker;
-    marker="*";
-	for(int i=1;i<res_num;i++){
-		marker=marker+"*";
-	}	 			
-    // Skip to the selected restaurant menu
-    while (getline(res_items, item)) {
-        if (item == marker) {
-            break;
-        }}
-    ofstream menu_edit("res_items.txt", ios::app);
-	string edit;
-	cout<<"\nWhich dish do you want to enter?\n";
-	//cin>>edit;
-	cin.ignore();
-	getline(cin,edit);    
-	menu_edit<<edit<<endl;
-	menu_edit.close();
-  	cout<<"\nDish added successfully\n";
+        cout << "Invalid restaurant number!" << endl;
+        return; // Exit the function
+    }
 
+    // Open the menu file 
+    fstream res_items("res_items.txt", ios::in);
+    vector<string> file_content;
+    string item, marker = "*";
+
+    for (int i = 1; i < res_num; i++) {
+        marker += "*";
+    }
+
+    // Read file content into a vector
+    while (getline(res_items, item)) {
+        file_content.push_back(item);
+    }
+    res_items.close();
+
+    // Locate the marker 
+    int insert_position = -1;
+    for (int i = 0; i < file_content.size(); i++) {
+        if (file_content[i] == marker) {
+            insert_position = i + 1;
+            break;
+        }
+    }
+
+    if (insert_position == -1) {
+        cout << "Error: Restaurant marker not found!" << endl;
+        return;
+    }
+
+//    new menu item at the correct position
+    cout << "\nWhich dish do you want to enter?\n";
+    string edit;
+    cin.ignore();
+    getline(cin, edit);
+
+    file_content.insert(file_content.begin() + insert_position, edit);
+
+    ofstream menu_edit("res_items.txt", ios::out | ios::trunc);
+    for (size_t i = 0; i < file_content.size(); i++) {
+        menu_edit << file_content[i] << endl;
+    }
+    menu_edit.close();
+
+    cout << "\nDish added successfully\n";
 }
+
 
 void opt_menu()
 {
@@ -482,7 +505,7 @@ int main()
 	login_register();
 	
 	menu_display();
-	
+  
 
 
 	return 0;
