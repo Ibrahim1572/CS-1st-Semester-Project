@@ -379,7 +379,8 @@ void opt_menu()
 	{
 		menu_display();
 	}
-//	else if()
+	else if(opt==2)
+		bill_calc();
 	else
 		opt_menu();
 }
