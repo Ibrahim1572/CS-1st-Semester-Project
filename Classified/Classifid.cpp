@@ -96,16 +96,37 @@ void menu_edit() {
     string edit;
     cin.ignore();
     getline(cin, edit);
+    
+    cout << "Enter the price of the dish:\n";
+    string dish_price;
+    cin >> dish_price;
 
-    file_content.insert(file_content.begin() + insert_position, edit);
+// Insert the new dish name and price into the vector
+    file_content.insert(file_content.begin() + insert_position, edit); 
+    file_content.insert(file_content.begin() + insert_position + 1, dish_price); 
+    
+//    file_content.insert(file_content.begin() + insert_position + 1, dish_price);
+//    file_content.insert(file_content.begin() + insert_position, edit);
 
-    ofstream menu_edit("res_items.txt", ios::out | ios::trunc);
+	ofstream menu_edit("res_items.txt", ios::out | ios::trunc);
     for (size_t i = 0; i < file_content.size(); i++) {
-        menu_edit << file_content[i] << endl;
+        menu_edit << file_content[i];
+        if (i < file_content.size() - 1) { 
+            menu_edit << endl; 
+        }
     }
+
+//    ofstream menu_edit("res_items.txt", ios::out | ios::trunc);
+//    for (size_t i = 0; i < file_content.size(); i++) {
+//        menu_edit << file_content[i] << endl;
+    
+    
+    
+    
     menu_edit.close();
 
     cout << "\nDish added successfully\n";
+    
 }
 
 
@@ -283,7 +304,12 @@ void login_user()
 				login_user();
 			}
 		}
+		
 	}
+	else
+		{
+			login_register();
+		}
 	
 
 	
@@ -315,6 +341,7 @@ void login_manager()
 				if(acc==iPass)
 				{
 					cout<<"Login Successful"<<endl;
+					flag=1;
 					break;
 				}
 //				else
@@ -339,6 +366,7 @@ void login_manager()
 			cout<<"---------------------------------------------------------------------------------------"<<endl;
 			login_user();
 		}
+		menu_edit();
 	}
 	else if(acc_type==2)
 	{
@@ -373,9 +401,13 @@ void login_manager()
 				login_manager();
 			}
 		}
+			
 	}
-	menu_edit();
 	
+	else
+		{
+			login_register();
+		}
 
 	
 }
