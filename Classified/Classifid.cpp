@@ -96,7 +96,7 @@ void opt_menu()
 		menu_display();
 	}
 	else if(opt==2)
-		bil_clac();
+		bill_calc();
 	else
 		opt_menu();
 }
@@ -468,8 +468,10 @@ void menu_display() {
     //    cout<<seekg();
     }
 			
+   int it_num;
+	cin>>it_num;
     res_items.close();
-    opt_menu();
+    order(res_num, it_num);
 }
 int main()
 {
