@@ -6,7 +6,6 @@
 #include <vector>
 using namespace std;
 
-void payment_delivery();
 void bill_calc();	
 void opt_menu();	
 void menu_edit(int res_num);
@@ -40,130 +39,75 @@ void bill_calc()
         counter++;
 	}
 	cout<<"Total is: "<<sum<<endl;
-	payment_delivery();
 }
 
-void menu_edit() 
-{
-    while (true) 
-	{ // Loop to handle repeated edits
-        cout << "Enter restaurant number:" << endl;
+void menu_edit() {
+    cout << "Enter restaurant number:" << endl;
 
-        fstream res_name;
-        string name;
-        int counter = 1, res_num;
+    fstream res_name;
+    string name;
+    int counter = 1, res_num;
 
-        // Display restaurant names
-        res_name.open("res_name.txt");
-        while (getline(res_name, name)) {
-            cout << counter << "\t" << name << endl;
-            counter++;
-        }	 	
-        res_name.close();
+    // Display restaurant names
+    res_name.open("res_name.txt");
+    while (getline(res_name, name)) {
+        cout << counter << "\t" << name << endl;
+        counter++;
+    }	 	
+    res_name.close();
 
-        cin >> res_num;
-        if (res_num < 1 || res_num > 4) {
-            cout << "Invalid restaurant number!" << endl;
-            return; // Exit the function
-        }
+    cin >> res_num;
+    if (res_num < 1 || res_num > 4) {
+        cout << "Invalid restaurant number!" << endl;
+        return; // Exit the function
+    }
 
-        // Open the menu file 
-        fstream res_items("res_items.txt", ios::in);
-        vector<string> file_content;
-        string item, marker = "*";
+    // Open the menu file 
+    fstream res_items("res_items.txt", ios::in);
+    vector<string> file_content;
+    string item, marker = "*";
 
-        for (int i = 1; i < res_num; i++) {
-            marker += "*";
-        }
+    for (int i = 1; i < res_num; i++) {
+        marker += "*";
+    }
 
-        // Read file content into a vector
-        while (getline(res_items, item)) {
-            file_content.push_back(item);
-        }
-        res_items.close();
+    // Read file content into a vector
+    while (getline(res_items, item)) {
+        file_content.push_back(item);
+    }
+    res_items.close();
 
-        // Locate the marker 
-        int insert_position = -1;
-        for (int i = 0; i < file_content.size(); i++) {
-            if (file_content[i] == marker) {
-                insert_position = i + 1;
-                break;
-            }
-        }
-
-        if (insert_position == -1) {
-            cout << "Error: Restaurant marker not found!" << endl;
-            return;
-        }
-
-        // Get new menu item at the correct position
-        cout << "\nWhich dish do you want to enter?\n";
-        string edit;
-        cin.ignore();
-        getline(cin, edit);
-        
-        cout << "Enter the price of the dish:\n";
-        string dish_price;
-        cin >> dish_price;
-
-        // Insert the new dish name and price into the vector
-        file_content.insert(file_content.begin() + insert_position, edit); 
-        file_content.insert(file_content.begin() + insert_position + 1, dish_price); 
-        
-        // Write updated content back to the file
-        ofstream menu_edit("res_items.txt", ios::out | ios::trunc);
-        for (size_t i = 0; i < file_content.size(); i++) {
-            menu_edit << file_content[i];
-            if (i < file_content.size() - 1) { 
-                menu_edit << endl; 
-            }
-        }
-        menu_edit.close();
-
-        cout << "\nDish added successfully\n";
-        cout << "If you want to edit more, enter 1\nIf you want to exit, enter any other number:" << endl;
-        int opt;
-        cin >> opt;
-        if (opt != 1) { // Exit the loop if the user doesn't enter 1
-            exit(0);
+    // Locate the marker 
+    int insert_position = -1;
+    for (int i = 0; i < file_content.size(); i++) {
+        if (file_content[i] == marker) {
+            insert_position = i + 1;
+            break;
         }
     }
+
+    if (insert_position == -1) {
+        cout << "Error: Restaurant marker not found!" << endl;
+        return;
+    }
+
+//    new menu item at the correct position
+    cout << "\nWhich dish do you want to enter?\n";
+    string edit;
+    cin.ignore();
+    getline(cin, edit);
+
+    file_content.insert(file_content.begin() + insert_position, edit);
+
+    ofstream menu_edit("res_items.txt", ios::out | ios::trunc);
+    for (size_t i = 0; i < file_content.size(); i++) {
+        menu_edit << file_content[i] << endl;
+    }
+    menu_edit.close();
+
+    cout << "\nDish added successfully\n";
 }
 
-void payment_delivery()
-{
-	cout<<"\nselect payment option:\n1 for debit card\n2 for cash on delivery"<<endl;
-	cin.ignore();
-	int opt;
-	string card[4];
-	cin>>opt;
-	if(opt==1)
-	{
-		cout<<"enetr cardholder name:"<<endl;
-		getline(cin, card[0]);
-		cout<<"enetr card number (XXXX-XXXX-XXXX-XXXX):"<<endl;
-		getline(cin, card[1]);
-		cout<<"enetr cvv:"<<endl;
-		getline(cin, card[2]);
-		cout<<"eneter card expiry (MM-YYYY):"<<endl;
-		getline(cin, card[3]);
-	}
-	else if(opt<1||opt>2)
-	{
-		cout<<"enetr valid option"<<endl;
-		payment_delivery();
-	}
-	
-	string address, zip, city, name;
-	cout<<"\n Enter your name:"<<endl;
-	getline(cin, name);
-	cout<<"\n Enetr your delivery adress:"<<endl;
-	getline(cin, address);
-	cout<<"\n Enetr your city:"<<endl;
-	getline(cin, city);
-	
-	cout<<"\n\nYour order has been confirmed\nIt will be delivered withing 45 min\nThankyou for ordering"<<endl;
-}
 
 void opt_menu()
 {
@@ -232,7 +176,7 @@ void login_register()
 	
 	if(user_type>4||user_type<1)
 	{
-		cout<<"Enter number of valid role"<<endl;
+		cout<<"enter number of valid role"<<endl;
 		cout<<"---------------------------------------------------------------------------------------"<<endl;
 		login_register();
 	}
@@ -253,13 +197,13 @@ void login_register()
 void login_user()
 {
 	int acc_type;
-	cout<<"Enter 1 to Login to Existing accout\nEnetr 2 to Register as a new user"<<endl;
+	cout<<"Enetr 1 to Login to Existing accout\nEnetr 2 to Register as a new user"<<endl;
 	cin>>acc_type;
 	
 	if(acc_type==1)
 	{
 		string iAcc, iPass;
-		cout<<"Enter user name: ";
+		cout<<"Enetr user name: ";
 		cin>>iAcc;
 		cout<<"Enter password: ";
 		cin>>iPass;
@@ -303,13 +247,13 @@ void login_user()
 			cout<<"---------------------------------------------------------------------------------------"<<endl;
 			login_user();
 		}
-		menu_display();
+		
 			
 	}
 	else if(acc_type==2)
 	{
 		string iAcc, iPass;
-		cout<<"Enter user name: ";
+		cout<<"Enetr user name: ";
 		cin>>iAcc;
 		
 		fstream user_accounts;
@@ -339,12 +283,7 @@ void login_user()
 				login_user();
 			}
 		}
-		
 	}
-	else
-		{
-			login_register();
-		}
 	
 
 	
@@ -353,13 +292,13 @@ void login_user()
 void login_manager()
 {
 	int acc_type;
-	cout<<"Enter 1 to Login to Existing restraunt\nEnetr 2 to Register a new restraunt"<<endl;
+	cout<<"Enetr 1 to Login to Existing restraunt\nEnetr 2 to Register a new restraunt"<<endl;
 	cin>>acc_type;
 	
 	if(acc_type==1)
 	{
 		string iAcc, iPass;
-		cout<<"Enter restraunt name: ";
+		cout<<"Enetr restraunt name: ";
 		cin>>iAcc;
 		cout<<"Enter password: ";
 		cin>>iPass;
@@ -376,7 +315,6 @@ void login_manager()
 				if(acc==iPass)
 				{
 					cout<<"Login Successful"<<endl;
-					flag=1;
 					break;
 				}
 //				else
@@ -401,12 +339,11 @@ void login_manager()
 			cout<<"---------------------------------------------------------------------------------------"<<endl;
 			login_user();
 		}
-		menu_edit();
 	}
 	else if(acc_type==2)
 	{
 		string iAcc, iPass;
-		cout<<"Enter restraunt name: ";
+		cout<<"Enetr restraunt name: ";
 		cin>>iAcc;
 		
 		fstream restraunts;
@@ -416,7 +353,7 @@ void login_manager()
 		{
 			if(acc==iAcc)
 			{
-				cout<<"Restraunt name already taken"<<endl;
+				cout<<"restraunt name already taken"<<endl;
 				cout<<"---------------------------------------------------------------------------------------"<<endl;
 				login_manager();
 				
@@ -436,13 +373,9 @@ void login_manager()
 				login_manager();
 			}
 		}
-			
 	}
+	menu_edit();
 	
-	else
-		{
-			login_register();
-		}
 
 	
 }
@@ -450,11 +383,11 @@ void login_manager()
 void login_owner()
 {
 	string iAcc, iPass;
-		cout<<"Enter owner user name: ";
+		cout<<"Enetr owner user name: ";
 		cin>>iAcc;
 		cout<<"Enter password: ";
 		cin>>iPass;
-		bool flag=0;
+		
 		fstream owner;
 		string acc, pass;
 		owner.open("owner.txt");
@@ -466,7 +399,6 @@ void login_owner()
 				if(acc==iPass)
 				{
 					cout<<"Login Successful"<<endl;
-					flag=1;
 					break;
 				}
 //				else
@@ -485,24 +417,13 @@ void login_owner()
 			
 
 		}
-		if(flag==0)
-		{
-			cout<<"Invalid username or password "<<endl;
-			cout<<"---------------------------------------------------------------------------------------"<<endl;
-			login_user();
-		}
-		cout<<"enetr 1 for ordering food\n2 for restraunt edit"<<endl;
-		int opt;
-		cin>>opt;
-		if(opt==1)
-		{
-			menu_display();
-		}
-		else
-		{
-			exit(0);
-		}
-		
+//		if(flag==0)
+//		{
+//			cout<<"Invalid username or password "<<endl;
+//			cout<<"---------------------------------------------------------------------------------------"<<endl;
+//			login_user();
+//		}
+//		
 }
 
 void menu_display() {
@@ -557,8 +478,7 @@ void menu_display() {
 
     // Display the menu 
     counter = 1;
-    system(" ");
-    cout<<"\n \t \033[1;31m Menu\033[0m \n";
+    cout<<"\n \t Menu \n";
     while (getline(res_items, item)) {
         if (item == next_marker) {
             break;
@@ -576,18 +496,15 @@ void menu_display() {
     res_items.close();
     order(res_num, it_num);
 }
-
 int main()
 {
-	system(" ");
-	cout << "\033[1;31mFood Delivery App\033[0m" << endl;
 	fstream order;
 	order.open("order.txt", ofstream::out | ofstream::trunc);
 	order.close();
 	
 	login_register();
 	
-//	menu_display();
+	menu_display();
   
 
 

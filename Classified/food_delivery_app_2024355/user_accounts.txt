@@ -22,5 +22,3 @@ npc
 123
 nohail
 zaraf.76
-crumble
-c123
