@@ -3,13 +3,13 @@ Biriyani
 350
 Butter chicken
 800
-biriyani
-350
 Kabab Karahi
 450
 Chapli Kabab
 600
 **
+pizza
+500
 Double fillet
 600
 Chicken sandwich

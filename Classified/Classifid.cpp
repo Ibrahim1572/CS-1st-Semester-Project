@@ -1,15 +1,16 @@
-#include<iostream>
-#include<fstream>
-#include<string>
-#include<iomanip>
-#include<sstream>
-#include <vector>
+#include<iostream>	//standard
+#include<fstream>	//for file handaling
+#include<string>//for strings
+#include<iomanip>//for formatting and spaces
+#include<sstream>//to convert string to int
+#include <vector>// to include vectors
+#include<limits>//usedd for to overcome errors in input of strings when there are spaces involved
 using namespace std;
 
 void payment_delivery();
 void bill_calc();	
 void opt_menu();	
-void menu_edit(int res_num);
+void menu_edit();
 void login_register();
 void login_user();
 void login_manager();
@@ -29,6 +30,7 @@ void it_search()
 	
 	string del_item;
 	
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	cout<<"Which item do you want to remove :"<<endl;
 	getline(cin, del_item);
 	
@@ -50,6 +52,18 @@ void it_search()
 	remove("res_items.txt");
     rename("temp.txt", "res_items.txt");
     cout<<"Item succuessfully removed "<<endl;
+    cout << "If you want to edit more, enter 1\nIf you want to exit, enter any other number:" << endl;
+        int opt;
+        cin >> opt;
+        if (opt != 1) { // Exit the loop if the user doesn't enter 1
+            exit(0);
+        }
+		
+		else
+		{
+			cout<<"Enetr valid option"<<endl;
+			menu_edit();
+		}
 }
 void bill_calc()
 {
@@ -128,8 +142,16 @@ void menu_edit()
             cout << "Error: Restaurant marker not found!" << endl;
             return;
         }
-
-        // Get new menu item at the correct position
+		int opt;
+		cout<<"If you want to add anything enter 1\nIf you want to remove anyhting enetr 2"<<endl;
+		cin>>opt;
+		if(opt==2)
+		{
+			it_search();
+		}
+        else if(opt==1)
+        {
+        	// Get new menu item at the correct position
         cout << "\nWhich dish do you want to enter?\n";
         string edit;
         cin.ignore();
@@ -160,6 +182,12 @@ void menu_edit()
         if (opt != 1) { // Exit the loop if the user doesn't enter 1
             exit(0);
         }
+		}
+		else
+		{
+			cout<<"Enetr valid option"<<endl;
+			menu_edit();
+		}
     }
 }
 
@@ -618,11 +646,11 @@ int main()
 	order.open("order.txt", ofstream::out | ofstream::trunc);
 	order.close();
 	
-//	login_register();
+	login_register();
 	
 //	menu_display();
   
-	it_search();
+//	it_search();
 
 	return 0;
 }
