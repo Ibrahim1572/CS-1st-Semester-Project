@@ -16,8 +16,41 @@ void login_manager();
 void login_owner();
 void menu_display();
 void res_edit();
+void it_search();
 
-
+void it_search()
+{
+	fstream res_items;
+	string item;
+	res_items.open("res_items.txt");
+	
+	ofstream outFile("temp.txt");
+	string n_item;
+	
+	string del_item;
+	
+	cout<<"Which item do you want to remove :"<<endl;
+	getline(cin, del_item);
+	
+	while(getline(res_items, item))
+	{
+		if(item!=del_item)
+		{
+			outFile << item << endl;
+		}
+		else if(item==del_item)
+		{
+			getline(res_items, item);
+		}
+	}
+	
+	res_items.close();
+	outFile.close();
+	
+	remove("res_items.txt");
+    rename("temp.txt", "res_items.txt");
+    cout<<"Item succuessfully removed "<<endl;
+}
 void bill_calc()
 {
 	fstream order;
@@ -585,11 +618,11 @@ int main()
 	order.open("order.txt", ofstream::out | ofstream::trunc);
 	order.close();
 	
-	login_register();
+//	login_register();
 	
 //	menu_display();
   
-
+	it_search();
 
 	return 0;
 }

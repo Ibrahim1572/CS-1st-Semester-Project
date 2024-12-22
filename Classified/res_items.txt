@@ -1,4 +1,6 @@
 *
+Biriyani
+350
 Butter chicken
 800
 biriyani
@@ -10,8 +12,6 @@ Chapli Kabab
 **
 Double fillet
 600
-Pizza
-500
 Chicken sandwich
 450
 Shawarma
