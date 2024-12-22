@@ -220,7 +220,7 @@ void payment_delivery()
 		cout<<"\033[1;31mEnter valid option\033[0m"<<endl;
 		payment_delivery();
 	}
-	
+	cin.ignore();
 	string address, zip, city, name;
 	cout<<"\033[1;34m\n Enter your name:\033[0m"<<endl;
 	getline(cin, name);
