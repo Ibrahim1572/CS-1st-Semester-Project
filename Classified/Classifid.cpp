@@ -567,6 +567,10 @@ void login_owner()
 		{
 			menu_display();
 		}
+		else if(opt==2)
+		{
+			menu_edit();
+		}
 		else
 		{
 			exit(0);
