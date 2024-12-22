@@ -1,10 +1,11 @@
 #include<iostream>	//standard
 #include<fstream>	//for file handaling
 #include<string>//for strings
+#include <cstring>
 #include<iomanip>//for formatting and spaces
 #include<sstream>//to convert string to int
 #include <vector>// to include vectors
-#include<limits>//usedd for to overcome errors in input of strings when there are spaces involved
+#include<limits>//used  to overcome errors in input of strings when there are spaces involved
 using namespace std;
 
 void payment_delivery();
@@ -21,50 +22,56 @@ void it_search();
 
 void it_search()
 {
-	fstream res_items;
-	string item;
-	res_items.open("res_items.txt");
-	
-	ofstream outFile("temp.txt");
-	string n_item;
-	
-	string del_item;
-	
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-	cout<<"Which item do you want to remove :"<<endl;
-	getline(cin, del_item);
-	
-	while(getline(res_items, item))
-	{
-		if(item!=del_item)
-		{
-			outFile << item << endl;
-		}
-		else if(item==del_item)
-		{
-			getline(res_items, item);
-		}
-	}
-	
-	res_items.close();
-	outFile.close();
-	
-	remove("res_items.txt");
-    rename("temp.txt", "res_items.txt");
-    cout<<"Item succuessfully removed "<<endl;
-    cout << "If you want to edit more, enter 1\nIf you want to exit, enter any other number:" << endl;
-        int opt;
-        cin >> opt;
-        if (opt != 1) { // Exit the loop if the user doesn't enter 1
-            exit(0);
+    fstream res_items;
+    res_items.open("res_items.txt", ios::in);
+
+    if (!res_items) {
+        cout << "\033[1;31mError: Unable to open the file!\033[0m" << endl;
+        return;
+    }
+
+    ofstream outFile("temp.txt", ios::out);
+
+    if (!outFile) {
+        cout << "\033[1;31mError: Unable to create a temporary file!\033[0m" << endl;
+        res_items.close();
+        return;
+    }
+
+    char del_item[100];  // Array to store the item to be deleted
+    cout << "\033[1;34mWhich item do you want to remove:\033[0m" << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.getline(del_item, 100);
+
+    char item[100];  // Array to store each line read from the file
+
+    while (res_items.getline(item, 100)) {
+        
+        if (strcmp(item, del_item) != 0) {
+            outFile << item << endl;
+        } else {
+            // Skip the next line 
+            res_items.getline(item, 100);
         }
-		
-		else
-		{
-			cout<<"Enetr valid option"<<endl;
-			menu_edit();
-		}
+    }
+
+    res_items.close();
+    outFile.close();
+
+    remove("res_items.txt");
+    rename("temp.txt", "res_items.txt");
+    cout << "\033[1;31mItem successfully removed\033[0m" << endl;
+
+    cout << "\033[1;34mIf you want to edit more, enter 1\nIf you want to exit, enter any other number:\033[0m" << endl;
+    int opt;
+    cin >> opt;
+    if (opt == 1) {
+        menu_edit();
+    } else {
+        exit(0);
+    }
 }
+
 void bill_calc()
 {
 	fstream order;
@@ -80,13 +87,13 @@ void bill_calc()
         if (getline(order, item)) { // Print price
             cout <<right << setw(10) << item << endl;
             stringstream ss(item);
-    		ss >> num;
-    		sum=sum+num;
+    			ss >> num;
+    			sum=sum+num;
             
         }	
         counter++;
 	}
-	cout<<"Total is: "<<sum<<endl;
+	cout<<"\033[1;31mTotal is:\033[0m "<<sum<<endl;
 	payment_delivery();
 }
 
@@ -94,7 +101,7 @@ void menu_edit()
 {
     while (true) 
 	{ // Loop to handle repeated edits
-        cout << "Enter restaurant number:" << endl;
+        cout << "\033[1;34mEnter restaurant number:\033[0m" << endl;
 
         fstream res_name;
         string name;
@@ -110,7 +117,7 @@ void menu_edit()
 
         cin >> res_num;
         if (res_num < 1 || res_num > 4) {
-            cout << "Invalid restaurant number!" << endl;
+            cout << "\033[1;31mInvalid restaurant number!\033[0m" << endl;
             return; // Exit the function
         }
 
@@ -139,11 +146,11 @@ void menu_edit()
         }
 
         if (insert_position == -1) {
-            cout << "Error: Restaurant marker not found!" << endl;
+            cout << "\033[1;31mError: Restaurant marker not found!\033[0m" << endl;
             return;
         }
 		int opt;
-		cout<<"If you want to add anything enter 1\nIf you want to remove anyhting enetr 2"<<endl;
+		cout<<"\033[1;34mIf you want to add anything enter 1\nIf you want to remove anything enter 2\033[0m"<<endl;
 		cin>>opt;
 		if(opt==2)
 		{
@@ -152,12 +159,12 @@ void menu_edit()
         else if(opt==1)
         {
         	// Get new menu item at the correct position
-        cout << "\nWhich dish do you want to enter?\n";
+        cout << "\033[1;34m\nWhich dish do you want to enter?\033[0m\n";
         string edit;
         cin.ignore();
         getline(cin, edit);
         
-        cout << "Enter the price of the dish:\n";
+        cout << "\033[1;34mEnter the price of the dish:\033[0m\n";
         string dish_price;
         cin >> dish_price;
 
@@ -175,8 +182,7 @@ void menu_edit()
         }
         menu_edit.close();
 
-        cout << "\nDish added successfully\n";
-        cout << "If you want to edit more, enter 1\nIf you want to exit, enter any other number:" << endl;
+        cout << "\033[1;34m\nDish added successfully\n\033[1;34mIf you want to edit more, enter 1\nIf you want to exit, enter any other number:\033[0m" << endl;
         int opt;
         cin >> opt;
         if (opt != 1) { // Exit the loop if the user doesn't enter 1
@@ -185,7 +191,7 @@ void menu_edit()
 		}
 		else
 		{
-			cout<<"Enetr valid option"<<endl;
+			cout<<"\033[1;31mEnter valid option\033[0m"<<endl;
 			menu_edit();
 		}
     }
@@ -193,43 +199,43 @@ void menu_edit()
 
 void payment_delivery()
 {
-	cout<<"\nselect payment option:\n1 for debit card\n2 for cash on delivery"<<endl;
+	cout<<"\033[1;34m\nSelect payment option:\n1 for debit card\n2 for cash on delivery\033[0m"<<endl;
 	cin.ignore();
 	int opt;
 	string card[4];
 	cin>>opt;
 	if(opt==1)
 	{
-		cout<<"enetr cardholder name:"<<endl;
+		cout<<"\033[1;34mEnter cardholder name:\033[0m"<<endl;
 		getline(cin, card[0]);
-		cout<<"enetr card number (XXXX-XXXX-XXXX-XXXX):"<<endl;
+		cout<<"\033[1;34mEnter card number (XXXX-XXXX-XXXX-XXXX):\033[0m"<<endl;
 		getline(cin, card[1]);
-		cout<<"enetr cvv:"<<endl;
+		cout<<"\033[1;34mEnter cvv:\033[0m"<<endl;
 		getline(cin, card[2]);
-		cout<<"eneter card expiry (MM-YYYY):"<<endl;
+		cout<<"\033[1;34mEnter card expiry (MM-YYYY):\033[0m"<<endl;
 		getline(cin, card[3]);
 	}
 	else if(opt<1||opt>2)
 	{
-		cout<<"enetr valid option"<<endl;
+		cout<<"\033[1;31mEnter valid option\033[0m"<<endl;
 		payment_delivery();
 	}
 	
 	string address, zip, city, name;
-	cout<<"\n Enter your name:"<<endl;
+	cout<<"\033[1;34m\n Enter your name:\033[0m"<<endl;
 	getline(cin, name);
-	cout<<"\n Enetr your delivery adress:"<<endl;
+	cout<<"\033[1;34m\n Enter your delivery address:\033[0m"<<endl;
 	getline(cin, address);
-	cout<<"\n Enetr your city:"<<endl;
+	cout<<"\033[1;34m\n Enter your city:\033[0m"<<endl;
 	getline(cin, city);
 	
-	cout<<"\n\nYour order has been confirmed\nIt will be delivered withing 45 min\nThankyou for ordering"<<endl;
+	cout<<"\033[1;31m\n\nYour order has been confirmed\nIt will be delivered within 45 min\nThank you for ordering\033[0m"<<endl;
 }
 
 void opt_menu()
 {
 	int opt; 
-	cout<<"If you want to order any thing else enter 1\nIf you want to check out press 2"<<endl;
+	cout<<"\033[1;34mIf you want to order anything else enter 1\nIf you want to check out press 2\033[0m"<<endl;
 	cin>>opt;
 	if(opt==1)
 	{
@@ -252,6 +258,7 @@ void order(int res_num, int it_num)
 	string marker="*", next_marker;
 
 	for(int i=1; i<res_num; i++)
+
 	{
 		marker=marker+"*";
 	}
