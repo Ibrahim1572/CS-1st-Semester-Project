@@ -6,6 +6,7 @@
 #include <vector>
 using namespace std;
 
+void payment_delivery();
 void bill_calc();	
 void opt_menu();	
 void menu_edit(int res_num);
@@ -39,6 +40,7 @@ void bill_calc()
         counter++;
 	}
 	cout<<"Total is: "<<sum<<endl;
+	payment_delivery();
 }
 
 void menu_edit() 
@@ -128,6 +130,40 @@ void menu_edit()
     }
 }
 
+void payment_delivery()
+{
+	cout<<"\nselect payment option:\n1 for debit card\n2 for cash on delivery"<<endl;
+	cin.ignore();
+	int opt;
+	string card[4];
+	cin>>opt;
+	if(opt==1)
+	{
+		cout<<"enetr cardholder name:"<<endl;
+		getline(cin, card[0]);
+		cout<<"enetr card number (XXXX-XXXX-XXXX-XXXX):"<<endl;
+		getline(cin, card[1]);
+		cout<<"enetr cvv:"<<endl;
+		getline(cin, card[2]);
+		cout<<"eneter card expiry (MM-YYYY):"<<endl;
+		getline(cin, card[3]);
+	}
+	else if(opt<1||opt>2)
+	{
+		cout<<"enetr valid option"<<endl;
+		payment_delivery();
+	}
+	
+	string address, zip, city, name;
+	cout<<"\n Enter your name:"<<endl;
+	getline(cin, name);
+	cout<<"\n Enetr your delivery adress:"<<endl;
+	getline(cin, address);
+	cout<<"\n Enetr your city:"<<endl;
+	getline(cin, city);
+	
+	cout<<"\n\nYour order has been confirmed\nIt will be delivered withing 45 min\nThankyou for ordering"<<endl;
+}
 
 void opt_menu()
 {
@@ -267,7 +303,7 @@ void login_user()
 			cout<<"---------------------------------------------------------------------------------------"<<endl;
 			login_user();
 		}
-		
+		menu_display();
 			
 	}
 	else if(acc_type==2)
@@ -418,7 +454,7 @@ void login_owner()
 		cin>>iAcc;
 		cout<<"Enter password: ";
 		cin>>iPass;
-		
+		bool flag=0;
 		fstream owner;
 		string acc, pass;
 		owner.open("owner.txt");
@@ -430,6 +466,7 @@ void login_owner()
 				if(acc==iPass)
 				{
 					cout<<"Login Successful"<<endl;
+					flag=1;
 					break;
 				}
 //				else
@@ -448,13 +485,24 @@ void login_owner()
 			
 
 		}
-//		if(flag==0)
-//		{
-//			cout<<"Invalid username or password "<<endl;
-//			cout<<"---------------------------------------------------------------------------------------"<<endl;
-//			login_user();
-//		}
-//		
+		if(flag==0)
+		{
+			cout<<"Invalid username or password "<<endl;
+			cout<<"---------------------------------------------------------------------------------------"<<endl;
+			login_user();
+		}
+		cout<<"enetr 1 for ordering food\n2 for restraunt edit"<<endl;
+		int opt;
+		cin>>opt;
+		if(opt==1)
+		{
+			menu_display();
+		}
+		else
+		{
+			exit(0);
+		}
+		
 }
 
 void menu_display() {
@@ -509,7 +557,8 @@ void menu_display() {
 
     // Display the menu 
     counter = 1;
-    cout<<"\n \t Menu \n";
+    system(" ");
+    cout<<"\n \t \033[1;31m Menu\033[0m \n";
     while (getline(res_items, item)) {
         if (item == next_marker) {
             break;
@@ -527,15 +576,18 @@ void menu_display() {
     res_items.close();
     order(res_num, it_num);
 }
+
 int main()
 {
+	system(" ");
+	cout << "\033[1;31mFood Delivery App\033[0m" << endl;
 	fstream order;
 	order.open("order.txt", ofstream::out | ofstream::trunc);
 	order.close();
 	
 	login_register();
 	
-	menu_display();
+//	menu_display();
   
 
 
