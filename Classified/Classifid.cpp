@@ -202,8 +202,8 @@ void payment_delivery()
 	cout<<"\033[1;34m\nSelect payment option:\n1 for debit card\n2 for cash on delivery\033[0m"<<endl;
 	cin.ignore();
 	int opt;
-	string card[4];
-	string* card = new string[4];
+	string cards[4];
+	string* card = new string[0];
 	cin>>opt;
 	if(opt==1)
 	{
