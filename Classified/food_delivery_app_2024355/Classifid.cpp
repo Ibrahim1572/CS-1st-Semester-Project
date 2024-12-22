@@ -176,7 +176,7 @@ void login_register()
 	
 	if(user_type>4||user_type<1)
 	{
-		cout<<"Enter number of valid role"<<endl;
+		cout<<"enter number of valid role"<<endl;
 		cout<<"---------------------------------------------------------------------------------------"<<endl;
 		login_register();
 	}
@@ -197,13 +197,13 @@ void login_register()
 void login_user()
 {
 	int acc_type;
-	cout<<"Enter 1 to Login to Existing accout\nEnetr 2 to Register as a new user"<<endl;
+	cout<<"Enetr 1 to Login to Existing accout\nEnetr 2 to Register as a new user"<<endl;
 	cin>>acc_type;
 	
 	if(acc_type==1)
 	{
 		string iAcc, iPass;
-		cout<<"Enter user name: ";
+		cout<<"Enetr user name: ";
 		cin>>iAcc;
 		cout<<"Enter password: ";
 		cin>>iPass;
@@ -253,7 +253,7 @@ void login_user()
 	else if(acc_type==2)
 	{
 		string iAcc, iPass;
-		cout<<"Enter user name: ";
+		cout<<"Enetr user name: ";
 		cin>>iAcc;
 		
 		fstream user_accounts;
@@ -292,13 +292,13 @@ void login_user()
 void login_manager()
 {
 	int acc_type;
-	cout<<"Enter 1 to Login to Existing restraunt\nEnetr 2 to Register a new restraunt"<<endl;
+	cout<<"Enetr 1 to Login to Existing restraunt\nEnetr 2 to Register a new restraunt"<<endl;
 	cin>>acc_type;
 	
 	if(acc_type==1)
 	{
 		string iAcc, iPass;
-		cout<<"Enter restraunt name: ";
+		cout<<"Enetr restraunt name: ";
 		cin>>iAcc;
 		cout<<"Enter password: ";
 		cin>>iPass;
@@ -343,7 +343,7 @@ void login_manager()
 	else if(acc_type==2)
 	{
 		string iAcc, iPass;
-		cout<<"Enter restraunt name: ";
+		cout<<"Enetr restraunt name: ";
 		cin>>iAcc;
 		
 		fstream restraunts;
@@ -353,7 +353,7 @@ void login_manager()
 		{
 			if(acc==iAcc)
 			{
-				cout<<"Restraunt name already taken"<<endl;
+				cout<<"restraunt name already taken"<<endl;
 				cout<<"---------------------------------------------------------------------------------------"<<endl;
 				login_manager();
 				
@@ -383,7 +383,7 @@ void login_manager()
 void login_owner()
 {
 	string iAcc, iPass;
-		cout<<"Enter owner user name: ";
+		cout<<"Enetr owner user name: ";
 		cin>>iAcc;
 		cout<<"Enter password: ";
 		cin>>iPass;
