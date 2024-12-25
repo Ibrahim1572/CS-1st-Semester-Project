@@ -24,3 +24,5 @@ nohail
 zaraf.76
 crumble
 c123
+Muhammad
+password123

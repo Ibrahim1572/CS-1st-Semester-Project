@@ -202,19 +202,19 @@ void payment_delivery()
 	cout<<"\033[1;34m\nSelect payment option:\n1 for debit card\n2 for cash on delivery\033[0m"<<endl;
 	cin.ignore();
 	int opt;
-	string cards[4];
-	string* card = new string[0];
+	string card[4];
+	//string* card = new string[0];
 	cin>>opt;
 	if(opt==1)
 	{
 		cout<<"\033[1;34mEnter cardholder name:\033[0m"<<endl;
-		getline(cin, *(card + 0));
+		getline(cin, card[0]);
 		cout<<"\033[1;34mEnter card number (XXXX-XXXX-XXXX-XXXX):\033[0m"<<endl;
-		getline(cin, *(card + 1));
+		getline(cin, card[1]);
 		cout<<"\033[1;34mEnter cvv:\033[0m"<<endl;
-		getline(cin, *(card + 2));
+		getline(cin, card[2]);
 		cout<<"\033[1;34mEnter card expiry (MM-YYYY):\033[0m"<<endl;
-		getline(cin, *(card + 3));
+		getline(cin,card[3]);
 	}
 	else if(opt<1||opt>2)
 	{
