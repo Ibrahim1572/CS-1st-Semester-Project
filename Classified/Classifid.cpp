@@ -209,10 +209,13 @@ void payment_delivery()
 	{
 		cout<<"\033[1;34mEnter cardholder name:\033[0m"<<endl;
 		getline(cin, card[0]);
+		cin.ignore();
 		cout<<"\033[1;34mEnter card number (XXXX-XXXX-XXXX-XXXX):\033[0m"<<endl;
 		getline(cin, card[1]);
+		cin.ignore();
 		cout<<"\033[1;34mEnter cvv:\033[0m"<<endl;
 		getline(cin, card[2]);
+		cin.ignore();
 		cout<<"\033[1;34mEnter card expiry (MM-YYYY):\033[0m"<<endl;
 		getline(cin,card[3]);
 	}
@@ -223,12 +226,15 @@ void payment_delivery()
 	}
 	cin.ignore();
 	string address, zip, city, name;
-	cout<<"\033[1;34m\n Enter your name:\033[0m"<<endl;
+	cout<<"\033[1;34m\nEnter your name:\033[0m"<<endl;
 	getline(cin, name);
-	cout<<"\033[1;34m\n Enter your delivery address:\033[0m"<<endl;
+	cin.ignore();
+	cout<<"\033[1;34m\nEnter your delivery address:\033[0m"<<endl;
 	getline(cin, address);
+	cin.ignore();
 	cout<<"\033[1;34m\n Enter your city:\033[0m"<<endl;
 	getline(cin, city);
+	cin.ignore();
 	
 	cout<<"\033[1;31m\n\nYour order has been confirmed\nIt will be delivered within 45 min\nThank you for ordering\033[0m"<<endl;
 }
